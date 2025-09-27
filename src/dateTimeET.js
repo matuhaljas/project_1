@@ -11,5 +11,11 @@ const timeNowFormatedET = function() {
     return timeNow.getHours() + ":" + timeNow.getMinutes()
 }
 
+const weekDay = function() {
+    let timeNow = new Date();
+    const dayNamesET = ["pühapäev", "esmaspäev", "teisipäev", "kolmapäev", "neljapäev", "reede", "laupäev"]
+    return dayNamesET[timeNow.getDay()]
+}
+
 //ekspordin kõik vajalikud
-module.exports = {fullDate: dateNowFormatedET, fullTime: timeNowFormatedET}
+module.exports = {weekDay, fullDate: dateNowFormatedET, fullTime: timeNowFormatedET}

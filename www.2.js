@@ -9,7 +9,7 @@ const textRef = "txt/vanasonad.txt";
 const pageHead = '<!DOCTYPE html>\n<html lang="et">\n<head>\n\t<meta charset="utf-8">\n\t<title>Marcus Haljasoks. veebiprogrammeerimine</title>\n</head><body>';
 const pageBanner = '<img src="vp_banner_2025_TA.jpg" alt="kursuse bänner">'
 const pageBody = '<h1>Marcus Haljasoks. veebiprogrammeerimine</h1><p>Veebileht on loodud veebiprogrammeerimise kursusel <a href="https://www.tlu.ee">Tallinna Ülikoolis</a>...</p><p style="color: red;">See on veel üks tekstilõik ja see on punane...</p><hr>';
-const pageLink = '\n\t<p>Vaata <a href="/vanasonad/">vanasõnasid</a>.</p>'
+const pageLink = '\n\t<p>Vaata <a href="/vanasonad/">vanasõnasid</a>.</p>\n\t<p>Vaata <a href="/hobid/">hobisid</a>.</p>'
 const pageFoot = '</body></html>';
 
 http.createServer(function(req, res){
@@ -54,6 +54,16 @@ http.createServer(function(req, res){
 				return res.end();
 			}
 		});
+	}
+	else if (currentUrl.pathname === "/hobid/") {
+		res.writeHead(200, {"Content-type": "text/html"});
+		res.write(pageHead);
+		res.write(pageBanner);
+		res.write(pageBody);
+		res.write("\n\t<p>Täna on " + dateEt.weekDay() + " " + dateEt.fullDate());
+		res.write(pageLink);
+		res.write(pageFoot);
+		return res.end();
 	}
 	else if (currentUrl.pathname === "vp_banner_2025_TA.jpg") {
 		//liidame muidu kättesaamatu piltide kausta meie veebi failiteega
