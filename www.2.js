@@ -7,8 +7,9 @@ const path = require("path");
 const dateEt = require("./src/dateTimeET");
 const textRef = "txt/vanasonad.txt";
 const pageHead = '<!DOCTYPE html>\n<html lang="et">\n<head>\n\t<meta charset="utf-8">\n\t<title>Marcus Haljasoks. veebiprogrammeerimine</title>\n</head><body>';
-const pageBanner = '<img src="vp_banner_2025_TA.jpg" alt="kursuse bänner">'
+const pageBanner = '<img src="./image/vp_banner_2025_TA.jpg" alt="kursuse bänner">';
 const pageBody = '<h1>Marcus Haljasoks. veebiprogrammeerimine</h1><p>Veebileht on loodud veebiprogrammeerimise kursusel <a href="https://www.tlu.ee">Tallinna Ülikoolis</a>...</p><p style="color: red;">See on veel üks tekstilõik ja see on punane...</p><hr>';
+const pageHobid = '<hr>\n<h1>Siin on natuke minu hobidest...</h1>\n\t<h2>Ma mängin kitarri</h2>\n\t<p>Mõned lood mida meeldib mängida on: <a href="https://www.youtube.com/watch?v=Ar48yzjn1PE&list=RDAr48yzjn1PE&start_radio=1">Coldplay - Sparks</a>, <a href="https://www.youtube.com/watch?v=8uD6s-X3590&list=RD8uD6s-X3590&start_radio=1">Harry Styles - Sweet Creature</a> ja <a href="https://www.youtube.com/watch?v=pkcJEvMcnEg&list=RDpkcJEvMcnEg&start_radio=1">Nirvana - Lithium</a>'
 const pageLink = '\n\t<p>Vaata <a href="/vanasonad/">vanasõnasid</a>.</p>\n\t<p>Vaata <a href="/hobid/">hobisid</a>.</p>'
 const pageFoot = '</body></html>';
 
@@ -61,34 +62,27 @@ http.createServer(function(req, res){
 		res.write(pageBanner);
 		res.write(pageBody);
 		res.write("\n\t<p>Täna on " + dateEt.weekDay() + " " + dateEt.fullDate());
-		res.write(pageLink);
+		//res.write(pageLink);
+		res.write(pageHobid);
 		res.write(pageFoot);
 		return res.end();
 	}
-	else if (currentUrl.pathname === "vp_banner_2025_TA.jpg") {
-		//liidame muidu kättesaamatu piltide kausta meie veebi failiteega
+	else if(currentUrl.pathname === "/vp_banner_2025_TA.jpg"){
+		//liidame muidu kättesaamatu piltide kausta meiue veebi failiteega
 		let bannerPath = path.join(__dirname, "images");
 		fs.readFile(bannerPath + currentUrl.pathname, (err, data)=>{
-			if(err) {
-				throw(err)
-			}
-			else {
+			if(err){
+				throw(err);
+			} else {
 				res.writeHead(200, {"Content-type": "image/jpeg"});
 				res.end(data);
 			}
 		});
 	}
+
 	else {
 		res.end("Viga 404, ei leia sellist lehte!")
 	}
 
     //minu port on 5122
 }).listen(5122);
-
-//...TODO...
-//pane kogu asi giti ulesse
-//git add .
-//git commit -m "Lisatud node serveri marsruudid"
-//git push regu token
-
-//Lisa alamleht
